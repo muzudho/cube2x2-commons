@@ -7,7 +7,7 @@ namespace Grayscale.Cube2X2Commons
     /// <summary>
     /// テスト用のクラス。
     /// </summary>
-    public class Cube2X2CommonsSmokeTest
+    public static class Cube2X2CommonsSmokeTest
     {
         /// <summary>
         /// ログ出力。

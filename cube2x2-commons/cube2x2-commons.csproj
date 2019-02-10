@@ -54,6 +54,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cube2X2CommonsSmokeTest.cs" />
+    <Compile Include="Misc\MyApplicationException.cs" />
+    <Compile Include="Normalization\Direction.cs" />
+    <Compile Include="Normalization\IsomorphicPosition.cs" />
     <Compile Include="Normalization\IsomorphicPositions.cs" />
     <Compile Include="Normalization\RotateButtonGroup.cs" />
     <Compile Include="Position\ColorHelper.cs" />

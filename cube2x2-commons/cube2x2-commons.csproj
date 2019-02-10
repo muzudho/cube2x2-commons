@@ -22,6 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>..\bin\Debug\Grayscale.Cube2X2Commons.xml</DocumentationFile>
+    <CodeAnalysisRuleSet>cube2x2-commons.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,6 +32,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>..\bin\Release\Grayscale.Cube2X2Commons.xml</DocumentationFile>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>cube2x2-commons.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -50,7 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cube2x2Commons.cs" />
+    <Compile Include="Cube2X2CommonsSmokeTest.cs" />
     <Compile Include="Normalization\IsomorphicPositions.cs" />
     <Compile Include="Normalization\RotateButtonGroup.cs" />
     <Compile Include="Position\ColorHelper.cs" />
@@ -62,7 +65,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="cube2x2-commons.pfx" />
+    <None Include="cube2x2-commons.ruleset" />
+    <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

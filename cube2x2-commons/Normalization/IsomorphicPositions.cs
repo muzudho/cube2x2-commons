@@ -6,20 +6,20 @@
     public class IsomorphicPositions
     {
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="IsomorphicPositions"/> class.
         /// </summary>
         private IsomorphicPositions()
         {
-            this.IsomorphicPosition = new Position[IsomorphicSize];
-            this.HandX = new int[IsomorphicSize];
-            this.HandY = new int[IsomorphicSize];
-            this.HandZ = new int[IsomorphicSize];
+            this.Phase = new Position[Order];
+            this.HandX = new int[Order];
+            this.HandY = new int[Order];
+            this.HandZ = new int[Order];
         }
 
         /// <summary>
-        /// Gets 配列の要素数。
+        /// Gets 同型の局面数。
         /// </summary>
-        public static int IsomorphicSize
+        public static int Order
         {
             get
             {
@@ -30,7 +30,7 @@
         /// <summary>
         /// Gets 同型の局面は 24個。
         /// </summary>
-        public Position[] IsomorphicPosition { get; private set; }
+        public Position[] Phase { get; private set; }
 
         /// <summary>
         /// Gets 持ち替え。X方向に 90°回した回数。
@@ -51,7 +51,7 @@
         /// 生成。
         /// </summary>
         /// <param name="sourcePosition">元となる局面。</param>
-        /// <returns></returns>
+        /// <returns>同型の局面。</returns>
         public static IsomorphicPositions Parse(Position sourcePosition)
         {
             var result = new IsomorphicPositions();
@@ -59,6 +59,55 @@
             result.CreateAllIsomorphic(sourcePosition);
 
             return result;
+        }
+
+        /// <summary>
+        /// 正規化をする。
+        /// つまり、24個の局面を作り、そのうち代表的な１つを選ぶ。
+        /// </summary>
+        /// <param name="handle">回す箇所。</param>
+        /// <returns>局面と、回す箇所。</returns>
+        public (Position, int) Normalize(int handle)
+        {
+            // 局面文字列を作成する。
+            var isomorphicText = new string[IsomorphicPositions.Order];
+            for (int i = 0; i < IsomorphicPositions.Order; i++)
+            {
+                isomorphicText[i] = this.Phase[i].BoardText;
+            }
+
+            // 辞書順ソートする。
+            System.Array.Sort(isomorphicText);
+
+            /*
+            // 確認表示。
+            for (int i = 0; i < StateSize; i++)
+            {
+                Trace.WriteLine(string.Format(
+                    CultureInfo.CurrentCulture,
+                    "{0} {1}",
+                    i,
+                    isomorphicText[i]));
+            }
+            */
+
+            // 代表の局面。
+            var normalizedBoardText = isomorphicText[0];
+
+            // 何番目のものか。
+            int normalizedIndex = 0;
+            for (; normalizedIndex < IsomorphicPositions.Order; normalizedIndex++)
+            {
+                if (normalizedBoardText == isomorphicText[normalizedIndex])
+                {
+                    break;
+                }
+            }
+
+            // 今回 回そうと思っていたハンドルを変更します。
+            var normalizedHandle = this.RotateHand(normalizedIndex, handle);
+
+            return (Position.Parse(normalizedBoardText), normalizedHandle);
         }
 
         /// <summary>
@@ -74,7 +123,7 @@
             {
                 for (int secondRotation = 0; secondRotation < 4; secondRotation++)
                 {
-                    this.IsomorphicPosition[isomorphicIndex] = this.CreateIsomorphic(sourcePosition, isomorphicIndex, firstRotation, secondRotation);
+                    this.Phase[isomorphicIndex] = this.CreateIsomorphic(sourcePosition, isomorphicIndex, firstRotation, secondRotation);
                     isomorphicIndex++;
 
                     // Console.WriteLine("isomorphicIndex: " + isomorphicIndex);
@@ -186,63 +235,12 @@
         }
 
         /// <summary>
-        /// 正規化をする。
-        /// つまり、24個の局面を作り、そのうち代表的な１つを選ぶ。
-        /// </summary>
-        /// <param name="handle">回す箇所。</param>
-        /// <returns>局面と、回す箇所。</returns>
-        public (Position, int) Normalize(int handle)
-        {
-            // var sourcePosition = Position.Parse(sourcePositionText);
-
-            // 局面文字列を作成する。
-            var isomorphicText = new string[IsomorphicPositions.IsomorphicSize];
-            for (int i = 0; i < IsomorphicPositions.IsomorphicSize; i++)
-            {
-                isomorphicText[i] = this.IsomorphicPosition[i].BoardText;
-            }
-
-            // 辞書順ソートする。
-            System.Array.Sort(isomorphicText);
-
-            /*
-            // 確認表示。
-            for (int i = 0; i < StateSize; i++)
-            {
-                Trace.WriteLine(string.Format(
-                    CultureInfo.CurrentCulture,
-                    "{0} {1}",
-                    i,
-                    isomorphicText[i]));
-            }
-            */
-
-            // 代表の局面。
-            var normalizedBoardText = isomorphicText[0];
-
-            // 何番目のものか。
-            int normalizedIndex = 0;
-            for (; normalizedIndex < IsomorphicPositions.IsomorphicSize; normalizedIndex++)
-            {
-                if (normalizedBoardText == isomorphicText[normalizedIndex])
-                {
-                    break;
-                }
-            }
-
-            // 今回 回そうと思っていたハンドルを変更します。
-            var normalizedHandle = this.RotateHand(normalizedIndex, handle);
-
-            return (Position.Parse(normalizedBoardText), normalizedHandle);
-        }
-
-        /// <summary>
         /// 今回 回そうと思っていたハンドルを変更します。
         /// </summary>
         /// <param name="isomorphicIndex">同型の要素番号。</param>
         /// <param name="handle">回す箇所。</param>
         /// <returns>視角を変えたあとの、回す箇所。</returns>
-        public int RotateHand(int isomorphicIndex, int handle)
+        private int RotateHand(int isomorphicIndex, int handle)
         {
             var rotateButtonGroup = new RotateButtonGroup();
             for (int iView = 0; iView < this.HandX[isomorphicIndex]; iView++)

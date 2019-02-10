@@ -1,5 +1,6 @@
 ﻿namespace Grayscale.Cube2X2Commons
 {
+    using System;
     using System.Globalization;
 
     /// <summary>
@@ -76,9 +77,14 @@
         /// <param name="position">局面文字列。</param>
         public void SetPosition(string position)
         {
+            if (position == null)
+            {
+                throw new ArgumentNullException("position");
+            }
+
             var tileNumber = 0;
 
-            for (var i=0; i<position.Length; i++)
+            for (var i = 0; i < position.Length; i++)
             {
                 if (position[i] != '/')
                 {

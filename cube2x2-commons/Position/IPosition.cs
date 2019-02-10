@@ -1,4 +1,4 @@
-﻿namespace Grayscale.Commons
+﻿namespace Grayscale.Cube2X2Commons
 {
     /// <summary>
     /// 局面。
@@ -19,9 +19,10 @@
         void SetTileColor(int tile, int color);
 
         /// <summary>
-        /// ゲーム開始状態に戻します。
+        /// 局面を設定します。
         /// </summary>
-        void SetNewGame();
+        /// <param name="position">局面文字列。</param>
+        void SetPosition(string position);
 
         /// <summary>
         /// 90度回転。4つのタイルを、１つずらします。

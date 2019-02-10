@@ -1,4 +1,4 @@
-﻿namespace Grayscale.Commons
+﻿namespace Grayscale.Cube2X2Commons
 {
     using System.Globalization;
 
@@ -7,6 +7,17 @@
     /// </summary>
     public abstract class AbstractPosition : IPosition
     {
+        /// <summary>
+        /// Gets 初期局面。
+        /// </summary>
+        public static string StartPosition
+        {
+            get
+            {
+                return "yyyy/vvvv/rrrr/bbbb/wwww/gggg";
+            }
+        }
+
         /// <summary>
         /// Gets 盤面を、文字列で返す。
         /// </summary>
@@ -60,35 +71,21 @@
         public abstract int GetTileColor(int tile);
 
         /// <summary>
-        /// ゲーム開始状態に戻します。
+        /// 局面を設定します。
         /// </summary>
-        public void SetNewGame()
+        /// <param name="position">局面文字列。</param>
+        public void SetPosition(string position)
         {
-            // 初期局面。
-            this.SetTileColor(0, (int)ColorNumber.Yellow);
-            this.SetTileColor(1, (int)ColorNumber.Yellow);
-            this.SetTileColor(2, (int)ColorNumber.Yellow);
-            this.SetTileColor(3, (int)ColorNumber.Yellow);
-            this.SetTileColor(4, (int)ColorNumber.Violet);
-            this.SetTileColor(5, (int)ColorNumber.Violet);
-            this.SetTileColor(6, (int)ColorNumber.Violet);
-            this.SetTileColor(7, (int)ColorNumber.Violet);
-            this.SetTileColor(8, (int)ColorNumber.Red);
-            this.SetTileColor(9, (int)ColorNumber.Red);
-            this.SetTileColor(10, (int)ColorNumber.Red);
-            this.SetTileColor(11, (int)ColorNumber.Red);
-            this.SetTileColor(12, (int)ColorNumber.Blue);
-            this.SetTileColor(13, (int)ColorNumber.Blue);
-            this.SetTileColor(14, (int)ColorNumber.Blue);
-            this.SetTileColor(15, (int)ColorNumber.Blue);
-            this.SetTileColor(16, (int)ColorNumber.Gray);
-            this.SetTileColor(17, (int)ColorNumber.Gray);
-            this.SetTileColor(18, (int)ColorNumber.Gray);
-            this.SetTileColor(19, (int)ColorNumber.Gray);
-            this.SetTileColor(20, (int)ColorNumber.Green);
-            this.SetTileColor(21, (int)ColorNumber.Green);
-            this.SetTileColor(22, (int)ColorNumber.Green);
-            this.SetTileColor(23, (int)ColorNumber.Green);
+            var tileNumber = 0;
+
+            for (var i=0; i<position.Length; i++)
+            {
+                if (position[i] != '/')
+                {
+                    this.SetTileColor(tileNumber, ColorHelper.GetNumberFromAlphabet(position[i]));
+                    tileNumber++;
+                }
+            }
         }
 
         /// <summary>

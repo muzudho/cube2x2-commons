@@ -1,4 +1,4 @@
-﻿namespace Grayscale.Commons
+﻿namespace Grayscale.Cube2X2Commons
 {
     /// <summary>
     /// 色番号。

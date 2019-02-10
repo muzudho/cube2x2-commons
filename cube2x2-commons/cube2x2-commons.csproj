@@ -32,6 +32,12 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>..\bin\Release\Grayscale.Cube2X2Commons.xml</DocumentationFile>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>cube2x2-commons.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -45,6 +51,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cube2x2Commons.cs" />
+    <Compile Include="Normalization\IsomorphicPositions.cs" />
+    <Compile Include="Normalization\RotateButtonGroup.cs" />
     <Compile Include="Position\ColorHelper.cs" />
     <Compile Include="Position\ColorNumber.cs" />
     <Compile Include="Position\AbstractPosition.cs" />
@@ -52,5 +60,9 @@
     <Compile Include="Position\Position.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="cube2x2-commons.pfx" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

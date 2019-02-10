@@ -1,7 +1,7 @@
 ﻿using System;
 
 [assembly: CLSCompliant(true)]
-namespace Grayscale.Commons
+namespace Grayscale.Cube2X2Commons
 {
     /// <summary>
     /// 

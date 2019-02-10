@@ -1,4 +1,4 @@
-﻿namespace Grayscale.Commons
+﻿namespace Grayscale.Cube2X2Commons
 {
     using System;
 
@@ -20,17 +20,6 @@
         private Position()
         {
             this.TileColorArray = new int[24];
-        }
-
-        /// <summary>
-        /// Gets 初期局面。
-        /// </summary>
-        public static string StartPosition
-        {
-            get
-            {
-                return "yyyy/vvvv/rrrr/bbbb/wwww/gggg";
-            }
         }
 
         /// <summary>
